@@ -84,12 +84,12 @@ namespace Sat.Recruitment.Infra.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("eea4a05c-35cd-43dc-8c49-1f25441ce834"),
+                            Id = new Guid("497b7118-dd73-42b7-bb72-6bd558783a53"),
                             Address = "Peru 2464",
                             CreateBy = "Seed Initial Data",
                             Email = "Juan@marmol.com",
                             IsDelete = false,
-                            LastModificationAt = new DateTime(2021, 11, 6, 17, 30, 1, 219, DateTimeKind.Unspecified).AddTicks(7518),
+                            LastModificationAt = new DateTime(2021, 11, 7, 0, 13, 14, 447, DateTimeKind.Unspecified).AddTicks(774),
                             Money = 1234m,
                             Name = "Juan",
                             Phone = "+5491154762312",
@@ -97,12 +97,12 @@ namespace Sat.Recruitment.Infra.Migrations
                         },
                         new
                         {
-                            Id = new Guid("abfa59d3-f3fe-4df7-b52e-dbf9429d1b2e"),
+                            Id = new Guid("df7cebf2-05f1-4780-bb5f-9266c6b0342b"),
                             Address = "Alvear y Colombres",
                             CreateBy = "Seed Initial Data",
                             Email = "Franco.Perez@gmail.com",
                             IsDelete = false,
-                            LastModificationAt = new DateTime(2021, 11, 6, 17, 30, 1, 222, DateTimeKind.Unspecified).AddTicks(3789),
+                            LastModificationAt = new DateTime(2021, 11, 7, 0, 13, 14, 451, DateTimeKind.Unspecified).AddTicks(3980),
                             Money = 112234m,
                             Name = "Franco",
                             Phone = "+534645213542",
@@ -110,12 +110,12 @@ namespace Sat.Recruitment.Infra.Migrations
                         },
                         new
                         {
-                            Id = new Guid("ab3f73a6-8244-4c1c-beae-021161e1ec82"),
+                            Id = new Guid("e5bf082e-c1d8-4bb5-98b5-6960bcf9af35"),
                             Address = "Garay y Otra Calle",
                             CreateBy = "Seed Initial Data",
                             Email = "Agustina@gmail.com",
                             IsDelete = false,
-                            LastModificationAt = new DateTime(2021, 11, 6, 17, 30, 1, 222, DateTimeKind.Unspecified).AddTicks(4082),
+                            LastModificationAt = new DateTime(2021, 11, 7, 0, 13, 14, 451, DateTimeKind.Unspecified).AddTicks(5547),
                             Money = 112234m,
                             Name = "Agustina",
                             Phone = "+534645213542",

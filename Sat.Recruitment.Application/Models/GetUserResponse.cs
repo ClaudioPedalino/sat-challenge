@@ -1,8 +1,9 @@
-﻿using System;
+﻿using Sat.Recruitment.Application.Interfaces;
+using System;
 
 namespace Sat.Recruitment.Application.Models
 {
-    public class GetUserResponse
+    public class GetUserResponse :IQueryResponse
     {
         public Guid Id { get; set; }
         public string Name { get; set; }

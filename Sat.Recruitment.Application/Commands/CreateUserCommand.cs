@@ -13,17 +13,18 @@ using System.Threading.Tasks;
 
 namespace Sat.Recruitment.Application.Commands
 {
-    public class CreateUserCommand : IRequest<CommandResult>, ITransactionable
-    {
-        public string Name { get; set; }
-        public string Email { get; set; }
-        public string Address { get; set; }
-        public string Phone { get; set; }
-        public UserType UserType { get; set; }
-        public decimal Money { get; set; }
-    }
+    public record CreateUserCommand(
+        string Name,
+        string Email,
+        string Address,
+        string Phone,
+        UserType UserType,
+        decimal Money
+        )
+        : IRequest<CommandResponse>, ITransactionable
+    { }
 
-    public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, CommandResult>
+    public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, CommandResponse>
     {
         private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
@@ -34,7 +35,7 @@ namespace Sat.Recruitment.Application.Commands
             _mapper = mapper;
         }
 
-        public async Task<CommandResult> Handle(CreateUserCommand request, CancellationToken cancellationToken)
+        public async Task<CommandResponse> Handle(CreateUserCommand request, CancellationToken cancellationToken)
         {
             var newUser = _mapper.Map<User>(new Tuple<CreateUserCommand, string>(
                 request,
@@ -42,13 +43,15 @@ namespace Sat.Recruitment.Application.Commands
 
             var alreadyExist = await _userRepository.AlreadyExist(newUser);
             if (alreadyExist)
-                CommandResult.Fail("User is duplicated");
-            
+                CommandResponse.Fail("User is duplicated");
+
             CalculateUserMoney(request.Money, newUser);
 
             await _userRepository.Insert(newUser);
-            return CommandResult.Success("User Created");
+
+            return CommandResponse.SuccesfullyCreated<User>($"{newUser.Name} with usertype {newUser.UserType}");
         }
+
 
         private static void CalculateUserMoney(decimal requestMoney, User newUser)
         {

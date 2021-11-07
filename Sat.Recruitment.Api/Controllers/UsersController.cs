@@ -1,15 +1,18 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Sat.Recruitment.Api.CustomAttributes;
 using Sat.Recruitment.Application.Commands;
+using Sat.Recruitment.Application.Dto;
+using Sat.Recruitment.Application.Models;
 using Sat.Recruitment.Application.Queries;
+using Sat.Recruitment.Application.Wrappers;
 using System;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Sat.Recruitment.Api.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class UsersController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -20,35 +23,30 @@ namespace Sat.Recruitment.Api.Controllers
         }
 
         [HttpGet]
+        [ApiKey]
         [Route("get-all")]
-        public async Task<ActionResult> GetAllUser([FromQuery] GetAllUserQuery request)
-        {
-            var response = await _mediator.Send(request);
-            return !response.Data.Any()
-               ? NoContent()
-               : Ok(response);
-        }
+        public async Task<IActionResult> GetAllUser([FromQuery] GetAllUserDto request) =>
+            await _mediator.PaginatedQueryWrapper<GetAllUserQuery, GetUserResponse>(
+                GetAllUserQuery.BuildGetAllUserQuery(request));
+
 
         [HttpGet]
+        [ApiKey]
         [Route("get-by-id/{userId}")]
-        public async Task<ActionResult> GetAllUser([FromRoute] Guid userId)
-        {
-            var response = await _mediator.Send(new GetUserByIdQuery(userId));
+        public async Task<IActionResult> GetAllUser([FromRoute] Guid userId, [FromQuery] bool bypassCache)
+            => await _mediator.QuerySingleWrapper<GetUserByIdQuery, GetUserDetailResponse>(
+                new GetUserByIdQuery(userId, bypassCache));
 
-            return response is null
-                ? NoContent()
-                : Ok(response);
-        }
 
         [HttpPost]
         [Route("create")]
-        public async Task<ActionResult> CreateUser([FromBody] CreateUserCommand request)
-        {
-            var response = await _mediator.Send(request);
+        public async Task<IActionResult> CreateUser([FromBody] CreateUserCommand request) =>
+            await _mediator.CommandWrapper(request);
 
-            return response.IsSuccess
-                ? Ok(response)
-                : BadRequest(response);
-        }
+
+        [HttpDelete]
+        [Route("delete/{userId}")]
+        public async Task<IActionResult> DeleteUser([FromRoute] Guid userId) =>
+            await _mediator.CommandWrapper(new DeleteUserCommand(userId));
     }
 }

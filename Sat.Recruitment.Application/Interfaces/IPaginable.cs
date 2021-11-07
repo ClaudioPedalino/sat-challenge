@@ -6,7 +6,7 @@
         public int PageSize { get; set; }
     }
 
-    public class Paginable : IPaginable
+    public record Paginable : IPaginable
     {
         public Paginable()
         {

@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Logging;
 using Sat.Recruitment.Application.Interfaces;
 using Sat.Recruitment.Infra.Interfaces;
@@ -13,11 +14,15 @@ namespace Sat.Recruitment.Application.MediatorBehaviours
     {
         private readonly ILogger<TransactionBehavior<TRequest, TResponse>> _logger;
         private readonly IDataContext _dbContext;
+        private IDistributedCache _cache;
 
-        public TransactionBehavior(ILogger<TransactionBehavior<TRequest, TResponse>> logger, IDataContext dbContext)
+        public TransactionBehavior(ILogger<TransactionBehavior<TRequest, TResponse>> logger,
+                                   IDataContext dbContext,
+                                   IDistributedCache cache)
         {
             _logger = logger;
             _dbContext = dbContext;
+            _cache = cache;
         }
 
         public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
@@ -33,7 +38,7 @@ namespace Sat.Recruitment.Application.MediatorBehaviours
                     response = await next();
 
                     await _dbContext.CommitTransactionAsync(cancellationToken);
-
+                    _cache.Remove("");
                     _logger.LogInformation($"End transaction: {typeof(TRequest).Name}.");
                 });
             }

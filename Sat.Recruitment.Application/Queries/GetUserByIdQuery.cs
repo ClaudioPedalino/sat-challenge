@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
+using Sat.Recruitment.Application.Interfaces;
 using Sat.Recruitment.Application.Models;
 using Sat.Recruitment.Infra.Interfaces;
 using System;
@@ -8,14 +9,10 @@ using System.Threading.Tasks;
 
 namespace Sat.Recruitment.Application.Queries
 {
-    public class GetUserByIdQuery : IRequest<GetUserDetailResponse>
+    public record GetUserByIdQuery(Guid Id, bool BypassCache) : IRequest<GetUserDetailResponse>, ICacheable
     {
-        public Guid Id { get; set; }
-
-        public GetUserByIdQuery(Guid id)
-        {
-            Id = id;
-        }
+        public string CacheKey => $"{GetType().Name}-{Id}";
+        public TimeSpan? SlidingExpiration { get; set; }
     }
 
     public class GetUserByIdQueryHandler : IRequestHandler<GetUserByIdQuery, GetUserDetailResponse>

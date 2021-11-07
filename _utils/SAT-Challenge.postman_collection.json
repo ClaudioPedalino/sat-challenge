@@ -1,0 +1,287 @@
+{
+	"info": {
+		"_postman_id": "27c749c5-97de-4b90-9123-1b0f625c07e2",
+		"name": "SAT-Challenge",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "get-all",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "{{sat-Api-Key}}",
+						"value": "{{sat-Api-Value}}",
+						"type": "text"
+					},
+					{
+						"key": "{{dev-rate-limit-key}}",
+						"value": "{{dev-rate-limit-value}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base-api-url}}/api/users/get-all?bypassCache=true",
+					"host": [
+						"{{base-api-url}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"get-all"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "Elijah",
+							"disabled": true
+						},
+						{
+							"key": "email",
+							"value": "Agustina@gmail.com",
+							"disabled": true
+						},
+						{
+							"key": "address",
+							"value": "9203",
+							"disabled": true
+						},
+						{
+							"key": "phone",
+							"value": "382-",
+							"disabled": true
+						},
+						{
+							"key": "userType",
+							"value": null,
+							"disabled": true
+						},
+						{
+							"key": "moneyFrom",
+							"value": "10",
+							"disabled": true
+						},
+						{
+							"key": "moneyTo",
+							"value": "500",
+							"disabled": true
+						},
+						{
+							"key": "bypassCache",
+							"value": "true"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get-by-id",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "{{sat-Api-Key}}",
+						"value": "{{sat-Api-Value}}",
+						"type": "text"
+					},
+					{
+						"key": "{{dev-rate-limit-key}}",
+						"value": "{{dev-rate-limit-value}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base-api-url}}/api/users/get-by-id/:userId?bypassCache=true",
+					"host": [
+						"{{base-api-url}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"get-by-id",
+						":userId"
+					],
+					"query": [
+						{
+							"key": "bypassCache",
+							"value": "true"
+						}
+					],
+					"variable": [
+						{
+							"key": "userId",
+							"value": "e5bf082e-c1d8-4bb5-98b5-6960bcf9af35"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create-user",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"/* DATA =======================================*/\r",
+							"const validUserType = [1,2,3]\r",
+							"/*============================================*/\r",
+							"\r",
+							"/* FUNCTIONS ==================================*/\r",
+							"function getRandomInt(min, max) {\r",
+							"    return Math.floor(Math.random() * (max - min)) + min;\r",
+							"}\r",
+							"\r",
+							"function getRandomDecimal(min, max) {\r",
+							"    return Math.random() * (max - min);\r",
+							"}\r",
+							"\r",
+							"function getRandomUserType() {\r",
+							"    return validUserType[getRandomInt(0, validUserType.length)]\r",
+							"}\r",
+							"/*============================================*/\r",
+							"\r",
+							"/* SETTINGS VARIABLES ========================*/\r",
+							"pm.globals.set(\"money\", getRandomDecimal(1, 150));\r",
+							"pm.globals.set(\"userType\", getRandomUserType());\r",
+							"/*============================================*/"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "{{dev-rate-limit-key}}",
+						"value": "{{dev-rate-limit-value}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"{{$randomFirstName}}\",\r\n  \"email\": \"{{$randomEmail}}\",\r\n  \"address\": \"{{$randomStreetAddress}}\",\r\n  \"phone\": \"{{$randomPhoneNumber}}\",\r\n  \"userType\": {{userType}},\r\n  \"money\": {{money}}\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base-api-url}}/api/Users/create",
+					"host": [
+						"{{base-api-url}}"
+					],
+					"path": [
+						"api",
+						"Users",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete-user",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "{{dev-rate-limit-key}}",
+						"value": "{{dev-rate-limit-value}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base-api-url}}/api/Users/delete/:userId",
+					"host": [
+						"{{base-api-url}}"
+					],
+					"path": [
+						"api",
+						"Users",
+						"delete",
+						":userId"
+					],
+					"variable": [
+						{
+							"key": "userId",
+							"value": "3fcd77d8-d2f9-4719-d945-08d9a19ca25c"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base-api-url",
+			"value": "https://localhost:7000"
+		},
+		{
+			"key": "sat-Api-Key",
+			"value": "SatApiKey"
+		},
+		{
+			"key": "sat-Api-Value",
+			"value": "let-me-pass"
+		},
+		{
+			"key": "access-token",
+			"value": ""
+		},
+		{
+			"key": "dev-rate-limit-key",
+			"value": "X-ClientId"
+		},
+		{
+			"key": "dev-rate-limit-value",
+			"value": "dev-id-1"
+		}
+	]
+}

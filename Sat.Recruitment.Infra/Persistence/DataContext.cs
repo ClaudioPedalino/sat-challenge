@@ -143,7 +143,7 @@ namespace Sat.Recruitment.Infra.Persistence
         private static List<User> GetInitialDataFromFile()
         {
             var seedData = new List<User>(5);
-            
+
             using (var reader = InitialDataFromFile.ReadUsersFromFile())
             {
                 while (reader.Peek() >= 0)

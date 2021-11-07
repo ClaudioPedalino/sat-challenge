@@ -10,8 +10,8 @@ using Sat.Recruitment.Infra.Persistence;
 namespace Sat.Recruitment.Infra.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20211105054420_init2")]
-    partial class init2
+    [Migration("20211107031314_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -25,25 +25,59 @@ namespace Sat.Recruitment.Infra.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("Id");
 
                     b.Property<string>("Address")
+                        .IsRequired()
+                        .HasMaxLength(70)
+                        .HasColumnType("nvarchar(70)")
+                        .HasColumnName("Address");
+
+                    b.Property<string>("CreateBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DeleteBy")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(70)
+                        .HasColumnType("nvarchar(70)")
+                        .HasColumnName("Email");
+
+                    b.Property<bool>("IsDelete")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("LastModificationAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<decimal>("Money")
-                        .HasColumnType("decimal(18,2)");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("decimal(18,2)")
+                        .HasDefaultValue(0m)
+                        .HasColumnName("Money");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(35)
+                        .HasColumnType("nvarchar(35)")
+                        .HasColumnName("Name");
 
                     b.Property<string>("Phone")
+                        .IsRequired()
+                        .HasMaxLength(21)
+                        .HasColumnType("nvarchar(21)")
+                        .HasColumnName("Phone");
+
+                    b.Property<string>("UpdateBy")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserType")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)")
+                        .HasColumnName("UserType");
 
                     b.HasKey("Id");
 
@@ -52,9 +86,12 @@ namespace Sat.Recruitment.Infra.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("35cfc7c8-8171-4122-aff4-294ac7ff5602"),
+                            Id = new Guid("497b7118-dd73-42b7-bb72-6bd558783a53"),
                             Address = "Peru 2464",
+                            CreateBy = "Seed Initial Data",
                             Email = "Juan@marmol.com",
+                            IsDelete = false,
+                            LastModificationAt = new DateTime(2021, 11, 7, 0, 13, 14, 447, DateTimeKind.Unspecified).AddTicks(774),
                             Money = 1234m,
                             Name = "Juan",
                             Phone = "+5491154762312",
@@ -62,9 +99,12 @@ namespace Sat.Recruitment.Infra.Migrations
                         },
                         new
                         {
-                            Id = new Guid("b7bc2331-811a-4688-ad1e-308f331a66a5"),
+                            Id = new Guid("df7cebf2-05f1-4780-bb5f-9266c6b0342b"),
                             Address = "Alvear y Colombres",
+                            CreateBy = "Seed Initial Data",
                             Email = "Franco.Perez@gmail.com",
+                            IsDelete = false,
+                            LastModificationAt = new DateTime(2021, 11, 7, 0, 13, 14, 451, DateTimeKind.Unspecified).AddTicks(3980),
                             Money = 112234m,
                             Name = "Franco",
                             Phone = "+534645213542",
@@ -72,9 +112,12 @@ namespace Sat.Recruitment.Infra.Migrations
                         },
                         new
                         {
-                            Id = new Guid("55c7dfaa-c47c-4234-86e5-928cf2d73037"),
+                            Id = new Guid("e5bf082e-c1d8-4bb5-98b5-6960bcf9af35"),
                             Address = "Garay y Otra Calle",
+                            CreateBy = "Seed Initial Data",
                             Email = "Agustina@gmail.com",
+                            IsDelete = false,
+                            LastModificationAt = new DateTime(2021, 11, 7, 0, 13, 14, 451, DateTimeKind.Unspecified).AddTicks(5547),
                             Money = 112234m,
                             Name = "Agustina",
                             Phone = "+534645213542",

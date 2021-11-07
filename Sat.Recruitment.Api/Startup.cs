@@ -1,15 +1,11 @@
-using MediatR;
+using AspNetCoreRateLimit;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
+using Sat.Recruitment.Api.Middlewares;
 using Sat.Recruitment.Application;
-using Sat.Recruitment.Application.AppConfig;
-using Sat.Recruitment.Application.Commands;
-using Sat.Recruitment.Application.MediatorBehaviours;
 using Sat.Recruitment.Infra;
-using System.Reflection;
 
 namespace Sat.Recruitment.Api
 {
@@ -24,45 +20,32 @@ namespace Sat.Recruitment.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
+            var appConfig = services.AddAppConfiguration(Configuration);
+
             services.AddControllers();
 
-            var appConfig = new AppConfig();
-            services.Configure<DatabaseConfig>(Configuration.GetSection($"{nameof(AppConfig)}:{nameof(AppConfig.DatabaseConfig)}"));
-            Configuration.Bind(nameof(AppConfig), appConfig);
-
-            services.AddMediatR(typeof(CreateUserCommand).GetTypeInfo().Assembly)
-                .AddTransient(typeof(IPipelineBehavior<,>), typeof(TransactionBehavior<,>));
-            
-            services.AddHttpContextAccessor();
+            services.AddApiConfiguration(appConfig);
 
             services.AddApplication();
-            services.AddInfraestructure(Configuration);
+            services.AddInfraestructure(appConfig);
 
             services.AddSwaggerGen();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-            app.UseSwagger();
-
-            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
-            // specifying the Swagger JSON endpoint.
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
-            });
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
-
+            app.UseMiddleware<ErrorHandlerMiddleware>();
+            app.UseIpRateLimiting();
+            app.AddSwagger();
+            app.UseMiniProfiler();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
         }
+
     }
 }
