@@ -44,7 +44,7 @@ namespace Sat.Recruitment.Application.Commands
 
             var alreadyExist = await _userRepository.AlreadyExist(newUser);
             if (alreadyExist)
-                CommandResponse.Fail(Const.UserDuplicated);
+                return CommandResponse.Fail(Const.UserDuplicated);
 
             CalculateUserMoney(request.Money, newUser);
 

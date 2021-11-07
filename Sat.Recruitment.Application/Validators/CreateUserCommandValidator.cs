@@ -9,24 +9,28 @@ namespace Sat.Recruitment.Application.Validators
         public CreateUserCommandValidator()
         {
             RuleFor(x => x.Name)
+                .Cascade(CascadeMode.Stop)
                 .NotNull()
                 .NotEmpty()
                 .MinimumLength(2)
                 .MaximumLength(35);
 
             RuleFor(x => x.Email)
+                .Cascade(CascadeMode.Stop)
                 .NotNull()
                 .NotEmpty()
                 .EmailAddress()
                 .MaximumLength(70);
 
             RuleFor(x => x.Address)
+                .Cascade(CascadeMode.Stop)
                 .NotNull()
                 .NotEmpty()
                 .MinimumLength(5)
                 .MaximumLength(70);
 
             RuleFor(x => x.Phone)
+                .Cascade(CascadeMode.Stop)
                 .NotNull()
                 .NotEmpty()
                 .MinimumLength(6)
@@ -39,8 +43,7 @@ namespace Sat.Recruitment.Application.Validators
                 .Must(BeValidUserType).WithMessage("The given UserType doesn´t match with any valid UserType");
 
             RuleFor(x => x.Money)
-                .NotNull()
-                .NotEmpty();
+                .GreaterThan(0);
         }
 
         private bool BeValidUserType(UserType type) => type switch

@@ -18,6 +18,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sat.Recruitment.LoadTesting", "Sat.Recruitment.LoadTesting\Sat.Recruitment.LoadTesting.csproj", "{06638F5E-D84E-4504-B08D-31BCE5B11A27}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sat.Recruitment.StressTesting", "Sat.Recruitment.StressTesting\Sat.Recruitment.StressTesting.csproj", "{584F4E3E-9CDD-481F-8F1D-9F505945C0E4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,6 +48,14 @@ Global
 		{ADDB5789-9ADC-4578-AE94-996EB8E4D48A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ADDB5789-9ADC-4578-AE94-996EB8E4D48A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ADDB5789-9ADC-4578-AE94-996EB8E4D48A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{06638F5E-D84E-4504-B08D-31BCE5B11A27}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{06638F5E-D84E-4504-B08D-31BCE5B11A27}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{06638F5E-D84E-4504-B08D-31BCE5B11A27}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{06638F5E-D84E-4504-B08D-31BCE5B11A27}.Release|Any CPU.Build.0 = Release|Any CPU
+		{584F4E3E-9CDD-481F-8F1D-9F505945C0E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{584F4E3E-9CDD-481F-8F1D-9F505945C0E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{584F4E3E-9CDD-481F-8F1D-9F505945C0E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{584F4E3E-9CDD-481F-8F1D-9F505945C0E4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
