@@ -1,13 +1,20 @@
 ﻿using AspNetCoreRateLimit;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Sat.Recruitment.Application.Interfaces;
+using Sat.Recruitment.Application.Services;
+using Sat.Recruitment.Domain.Entities;
 using Sat.Recruitment.Infra.AppConfiguration;
+using Sat.Recruitment.Infra.Persistence;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using Swashbuckle.AspNetCore.SwaggerUI;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Text;
 
 namespace Sat.Recruitment.Api
 {
@@ -19,7 +26,8 @@ namespace Sat.Recruitment.Api
             services.Configure<DatabaseConfig>(configuration.GetSection($"{nameof(AppConfig)}:{nameof(AppConfig.DatabaseConfig)}"));
             services.Configure<CacheSetting>(configuration.GetSection($"{nameof(AppConfig)}:{nameof(AppConfig.CacheSetting)}"));
             services.Configure<IpRateLimitOptions>(configuration.GetSection($"{nameof(AppConfig)}:{nameof(AppConfig.IpRateLimit)}"));
-            
+            services.Configure<JwtSettings>(configuration.GetSection($"{nameof(AppConfig)}:{nameof(AppConfig.JwtSettings)}"));
+
             configuration.Bind(nameof(AppConfig), appConfig);
             return appConfig;
         }
@@ -28,10 +36,42 @@ namespace Sat.Recruitment.Api
         {
             services.AddOptions();
             services.AddMemoryCache();
+            services.AddIdentityAuth(appConfig);
             services.AddRateLimit();
             services.AddSwagger(appConfig);
 
             return services;
+        }
+
+
+        private static void AddIdentityAuth(this IServiceCollection services, AppConfig appConfig)
+        {
+            services
+                .AddDefaultIdentity<AuthUser>()
+                .AddEntityFrameworkStores<DataContext>();
+
+            services
+                .AddAuthentication(config =>
+                {
+                    config.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    config.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                    config.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                })
+                .AddJwtBearer(config =>
+                {
+                    config.SaveToken = true;
+                    config.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(appConfig.JwtSettings.Secret)),
+                        ValidateIssuer = false,
+                        ValidateAudience = false,
+                        RequireExpirationTime = false,
+                        ValidateLifetime = true
+                    };
+                });
+
+            services.AddScoped<ITokenService, TokenService>();
         }
 
         private static void AddRateLimit(this IServiceCollection services)

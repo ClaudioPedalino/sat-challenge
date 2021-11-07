@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using Sat.Recruitment.Domain.Entities;
+using Sat.Recruitment.Infra.Common;
 using Sat.Recruitment.Infra.Extensions;
 using Sat.Recruitment.Infra.Helpers;
 using Sat.Recruitment.Infra.Interfaces;
@@ -28,6 +29,7 @@ namespace Sat.Recruitment.Infra.Persistence
         }
 
         public DbSet<User> Users { get; set; }
+        public DbSet<AuthUser> AuthUsers { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -42,9 +44,8 @@ namespace Sat.Recruitment.Infra.Persistence
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
-            //var requester = _httpContextAccessor?.HttpContext?.User?.Claims?
-            //.FirstOrDefault(x => x.Type == Const.UserIdClaim)?.Value;
-            var requester = "...";
+            var requester = _httpContextAccessor?.HttpContext?.User?.Claims?
+                .FirstOrDefault(x => x.Type == Const.UserIdClaim)?.Value;
 
             var entries = ChangeTracker.Entries().Where(e => e.Entity is BaseEntity && (
                     e.State == EntityState.Added

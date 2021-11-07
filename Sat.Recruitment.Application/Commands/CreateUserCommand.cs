@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
+using Sat.Recruitment.Infra.Common;
 using Sat.Recruitment.Application.Helpers;
 using Sat.Recruitment.Application.Interfaces;
 using Sat.Recruitment.Application.Wrappers;
@@ -43,7 +44,7 @@ namespace Sat.Recruitment.Application.Commands
 
             var alreadyExist = await _userRepository.AlreadyExist(newUser);
             if (alreadyExist)
-                CommandResponse.Fail("User is duplicated");
+                CommandResponse.Fail(Const.UserDuplicated);
 
             CalculateUserMoney(request.Money, newUser);
 

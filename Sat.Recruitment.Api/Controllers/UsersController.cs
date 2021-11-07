@@ -1,4 +1,6 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Sat.Recruitment.Api.CustomAttributes;
 using Sat.Recruitment.Application.Commands;
@@ -11,6 +13,7 @@ using System.Threading.Tasks;
 
 namespace Sat.Recruitment.Api.Controllers
 {
+    //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [ApiController]
     [Route("api/[controller]")]
     public class UsersController : ControllerBase
@@ -39,12 +42,14 @@ namespace Sat.Recruitment.Api.Controllers
 
 
         [HttpPost]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [Route("create")]
         public async Task<IActionResult> CreateUser([FromBody] CreateUserCommand request) =>
             await _mediator.CommandWrapper(request);
 
 
         [HttpDelete]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [Route("delete/{userId}")]
         public async Task<IActionResult> DeleteUser([FromRoute] Guid userId) =>
             await _mediator.CommandWrapper(new DeleteUserCommand(userId));
