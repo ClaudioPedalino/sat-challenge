@@ -35,8 +35,8 @@ namespace Sat.Recruitment.Application.Queries
                 MoneyFrom: request.MoneyFrom,
                 MoneyTo: request.MoneyTo,
                 BypassCache: request.BypassCache);
-                //PageNumber: request.PageNumber > 0 ? request.PageNumber : 1,
-                //PageSize: request.PageSize > 0 ? request.PageSize : 15);
+        //PageNumber: request.PageNumber > 0 ? request.PageNumber : 1,
+        //PageSize: request.PageSize > 0 ? request.PageSize : 15);
 
         public string CacheKey => $"{GetType().Name}-{Name}-{Email}-{Address}-{Phone}-{UserType}-{MoneyFrom}-{MoneyTo}";
         public TimeSpan? SlidingExpiration { get; set; }

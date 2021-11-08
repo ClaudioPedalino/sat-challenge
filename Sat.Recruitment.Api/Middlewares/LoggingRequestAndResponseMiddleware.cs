@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Http;
-using Newtonsoft.Json;
 using Sat.Recruitment.Application.Extensions;
 using Sat.Recruitment.Application.Helpers;
 using Sat.Recruitment.Application.Models.LoggingModels;
@@ -14,7 +13,7 @@ namespace Sat.Recruitment.Api.Middlewares
     {
         private readonly RequestDelegate _next;
         private readonly ILogger _logger;
-        private static readonly List<string> _ignoredEndpoints = 
+        private static readonly List<string> _ignoredEndpoints =
             new() { "health", "swagger" };
 
         public LoggingRequestAndResponseMiddleware(RequestDelegate next, ILogger logger)

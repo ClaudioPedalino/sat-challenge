@@ -18,7 +18,6 @@ using Sat.Recruitment.Infra.Interfaces;
 using Sat.Recruitment.Infra.Persistence.Repositories;
 using Serilog;
 using StackExchange.Profiling;
-using System;
 using System.Reflection;
 
 namespace Sat.Recruitment.Application
@@ -40,7 +39,7 @@ namespace Sat.Recruitment.Application
 
             services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
             services.AddTransient<IUserRepository, UserRepository>();
-            
+
             services.AddTransient<INotifierService, NotifierService>();
 
             services.AddAutoMapper(typeof(UserProfile));

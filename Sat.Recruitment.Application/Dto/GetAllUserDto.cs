@@ -1,6 +1,4 @@
-﻿using Sat.Recruitment.Application.Queries;
-
-namespace Sat.Recruitment.Application.Dto
+﻿namespace Sat.Recruitment.Application.Dto
 {
     public class GetAllUserDto
     {

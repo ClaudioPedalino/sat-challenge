@@ -5,7 +5,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Sat.Recruitment.Api.Middlewares;
 using Sat.Recruitment.Application;
-using Sat.Recruitment.Infra.AppConfiguration;
 
 namespace Sat.Recruitment.Api
 {
