@@ -6,7 +6,6 @@ using Sat.Recruitment.Application.Interfaces;
 using Sat.Recruitment.Application.Mappers;
 using Sat.Recruitment.Application.MediatorBehaviours;
 using Sat.Recruitment.Application.Models;
-using Sat.Recruitment.Application.Queries;
 using Sat.Recruitment.Application.Services;
 using Sat.Recruitment.Application.Validators;
 using Sat.Recruitment.Infra.Interfaces;

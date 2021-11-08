@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Sat.Recruitment.Application.Commands;
 using Sat.Recruitment.Application.Extensions;
-using Sat.Recruitment.Application.Models;
 using Sat.Recruitment.Application.Models.Responses;
 using Sat.Recruitment.Domain.Entities;
 using System;

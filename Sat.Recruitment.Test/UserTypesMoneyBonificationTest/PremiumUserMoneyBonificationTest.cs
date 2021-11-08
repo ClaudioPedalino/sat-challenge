@@ -1,10 +1,5 @@
-﻿using Sat.Recruitment.Domain.UserMoneyCalculation;
-using Sat.Recruitment.Domain;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Sat.Recruitment.Domain;
+using Sat.Recruitment.Domain.UserMoneyCalculation;
 using Xunit;
 
 namespace Sat.Recruitment.Test.UserTypesMoneyBonificationTest

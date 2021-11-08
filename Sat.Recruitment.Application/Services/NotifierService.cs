@@ -1,9 +1,7 @@
 ﻿using MediatR;
 using Sat.Recruitment.Application.Helpers;
-using Sat.Recruitment.Application.Models;
-using Sat.Recruitment.Infra.Interfaces;
-using System.Threading.Tasks;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Sat.Recruitment.Application.Services
 {

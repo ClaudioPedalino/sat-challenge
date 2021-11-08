@@ -3,7 +3,6 @@ using MediatR;
 using Sat.Recruitment.Application.Helpers;
 using Sat.Recruitment.Application.Interfaces;
 using Sat.Recruitment.Application.Wrappers;
-using Sat.Recruitment.Domain;
 using Sat.Recruitment.Domain.Entities;
 using Sat.Recruitment.Domain.Enums;
 using Sat.Recruitment.Domain.UserMoneyCalculation;
