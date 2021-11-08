@@ -5,7 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Sat.Recruitment.Api.Middlewares;
 using Sat.Recruitment.Application;
-using Sat.Recruitment.Infra;
+using Sat.Recruitment.Infra.AppConfiguration;
 
 namespace Sat.Recruitment.Api
 {
@@ -21,14 +21,10 @@ namespace Sat.Recruitment.Api
         public void ConfigureServices(IServiceCollection services)
         {
             var appConfig = services.AddAppConfiguration(Configuration);
-
             services.AddControllers();
 
             services.AddApiConfiguration(appConfig);
-
-            services.AddApplication();
-            services.AddInfraestructure(appConfig);
-
+            services.AddApplication(appConfig);
             services.AddSwaggerGen();
         }
 
@@ -38,9 +34,11 @@ namespace Sat.Recruitment.Api
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseMiddleware<ErrorHandlerMiddleware>();
+            app.UseMiddleware<LoggingRequestAndResponseMiddleware>();
             app.UseIpRateLimiting();
             app.AddSwagger();
             app.UseMiniProfiler();
+            app.UseHealthCheck();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

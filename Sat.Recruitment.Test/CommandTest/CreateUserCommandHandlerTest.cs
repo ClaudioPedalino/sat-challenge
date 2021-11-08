@@ -16,8 +16,8 @@ namespace Sat.Recruitment.Test.CommandTest
     public class CreateUserCommandHandlerTest
     {
         private readonly CreateUserCommandHandler _sut;
-        private readonly Mock<IUserRepository> _userRepositoryMock = new Mock<IUserRepository>();
-        private readonly Mock<IMapper> _mapperMock = new Mock<IMapper>();
+        private readonly Mock<IUserRepository> _userRepositoryMock = new();
+        private readonly Mock<IMapper> _mapperMock = new();
 
         public CreateUserCommandHandlerTest()
         {

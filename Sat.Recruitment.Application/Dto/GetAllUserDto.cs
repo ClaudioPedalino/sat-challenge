@@ -1,4 +1,6 @@
-﻿namespace Sat.Recruitment.Application.Dto
+﻿using Sat.Recruitment.Application.Queries;
+
+namespace Sat.Recruitment.Application.Dto
 {
     public class GetAllUserDto
     {
@@ -10,5 +12,7 @@
         public decimal? MoneyFrom { get; set; }
         public decimal? MoneyTo { get; set; }
         public bool BypassCache { get; set; }
+        public virtual int PageNumber { get; set; }
+        public virtual int PageSize { get; set; }
     }
 }

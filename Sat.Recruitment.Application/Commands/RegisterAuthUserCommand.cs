@@ -1,11 +1,12 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
+using Sat.Recruitment.Infra.Common;
 using Sat.Recruitment.Application.Interfaces;
 using Sat.Recruitment.Application.Validators;
 using Sat.Recruitment.Application.Wrappers;
 using Sat.Recruitment.Domain.Entities;
-using Sat.Recruitment.Infra.Common;
+using System.Linq;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;

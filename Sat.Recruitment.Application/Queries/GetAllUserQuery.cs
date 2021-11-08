@@ -3,7 +3,6 @@ using MediatR;
 using Sat.Recruitment.Application.Dto;
 using Sat.Recruitment.Application.Extensions;
 using Sat.Recruitment.Application.Interfaces;
-using Sat.Recruitment.Application.Models;
 using Sat.Recruitment.Application.Models.Responses;
 using Sat.Recruitment.Application.Wrappers;
 using Sat.Recruitment.Domain.Entities;
@@ -36,10 +35,13 @@ namespace Sat.Recruitment.Application.Queries
                 MoneyFrom: request.MoneyFrom,
                 MoneyTo: request.MoneyTo,
                 BypassCache: request.BypassCache);
+                //PageNumber: request.PageNumber > 0 ? request.PageNumber : 1,
+                //PageSize: request.PageSize > 0 ? request.PageSize : 15);
 
         public string CacheKey => $"{GetType().Name}-{Name}-{Email}-{Address}-{Phone}-{UserType}-{MoneyFrom}-{MoneyTo}";
         public TimeSpan? SlidingExpiration { get; set; }
     }
+
 
     public class GetUserQueryHandler : IRequestHandler<GetAllUserQuery, PaginationResponse<GetUserResponse>>
     {

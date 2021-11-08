@@ -15,7 +15,7 @@ namespace Sat.Recruitment.Api.CustomAttributes
         public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
             var appSettings = context.HttpContext.RequestServices.GetRequiredService<IConfiguration>();
-
+            
             var apiKey = appSettings.GetValue<string>(
                 $"{nameof(AppConfig)}:{nameof(AppConfig.Api)}:{nameof(AppConfig.Api.SatApiKey)}");
 
@@ -28,7 +28,7 @@ namespace Sat.Recruitment.Api.CustomAttributes
                 };
                 return;
             }
-
+            
             if (!apiKey.Equals(extractedApiKey))
             {
                 context.Result = new ContentResult()

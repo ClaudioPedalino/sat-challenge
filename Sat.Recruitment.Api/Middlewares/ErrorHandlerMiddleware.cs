@@ -29,6 +29,7 @@ namespace Sat.Recruitment.Api.Middlewares
                 var response = context.Response;
                 response.ContentType = "application/json";
                 var responseModel = ApiResponse<string>.Fail(error.Message);
+                responseModel.HasErrors = true;
                 response.StatusCode = error switch
                 {
                     CustomException => (int)HttpStatusCode.BadRequest,

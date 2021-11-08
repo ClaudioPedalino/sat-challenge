@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Sat.Recruitment.Domain.Entities;
 using Sat.Recruitment.Infra.Interfaces;
+using Sat.Recruitment.Domain.Entities;
 using System;
 using System.Linq;
 using System.Threading.Tasks;

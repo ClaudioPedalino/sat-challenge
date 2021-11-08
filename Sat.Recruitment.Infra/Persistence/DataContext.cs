@@ -112,6 +112,8 @@ namespace Sat.Recruitment.Infra.Persistence
             await Database.CreateExecutionStrategy().ExecuteAsync(func);
         }
 
+
+
         private void SeedInitialData(ModelBuilder modelBuilder)
         {
             var seedData = GetInitialDataFromFile();

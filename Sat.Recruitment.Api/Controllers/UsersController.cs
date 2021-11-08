@@ -31,7 +31,9 @@ namespace Sat.Recruitment.Api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PaginationResponse<GetUserResponse>))]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ApiResponse<string>))]
-        public async Task<IActionResult> GetAllUser([FromQuery] GetAllUserDto request) =>
+        public async Task<IActionResult> GetAllUser(
+            [FromHeader(Name = "SatApiKey")] string apiKey,
+            [FromQuery] GetAllUserDto request) =>
             await _mediator.PaginatedQueryWrapper<GetAllUserQuery, GetUserResponse>(
                 GetAllUserQuery.BuildGetAllUserQuery(request));
 
@@ -42,7 +44,10 @@ namespace Sat.Recruitment.Api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetUserDetailResponse))]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ApiResponse<string>))]
-        public async Task<IActionResult> GetAllUser([FromRoute] Guid userId, [FromQuery] bool bypassCache)
+        public async Task<IActionResult> GetUserById(
+            [FromHeader(Name = "SatApiKey")] string apiKey,
+            [FromRoute] Guid userId,
+            [FromQuery] bool bypassCache)
             => await _mediator.QuerySingleWrapper<GetUserByIdQuery, GetUserDetailResponse>(
                 new GetUserByIdQuery(userId, bypassCache));
 

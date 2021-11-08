@@ -19,6 +19,11 @@
 		<PackageReference Include="MediatR" Version="9.0.0" />
 		<PackageReference Include="MiniProfiler.AspNetCore.Mvc" Version="4.2.22" />
 		<PackageReference Include="MiniProfiler.EntityFrameworkCore" Version="4.2.22" />
+		<PackageReference Include="AspNetCore.HealthChecks.SqlServer" Version="5.0.3" />
+		<PackageReference Include="AspNetCore.HealthChecks.UI" Version="5.0.1" />
+		<PackageReference Include="AspNetCore.HealthChecks.UI.Client" Version="5.0.1" />
+		<PackageReference Include="AspNetCore.HealthChecks.UI.InMemory.Storage" Version="5.0.1" />
+		<PackageReference Include="AspNetCore.HealthChecks.UI.SqlServer.Storage" Version="5.0.1" />
 	</ItemGroup>
 
 	<ItemGroup>

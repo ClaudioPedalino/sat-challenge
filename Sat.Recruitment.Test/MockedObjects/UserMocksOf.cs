@@ -5,7 +5,7 @@ namespace Sat.Recruitment.Test.MockedObjects
     public static class UserMocksOf
     {
         public static User Valid_User()
-            => new User()
+            => new ()
             {
                 Name = "Mike",
                 Email = "mike@gmail.com",

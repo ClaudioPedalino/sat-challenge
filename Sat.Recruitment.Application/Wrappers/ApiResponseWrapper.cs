@@ -32,7 +32,7 @@ namespace Sat.Recruitment.Application.Wrappers
         {
             var response = await _mediator.Send(command) as CommandResponse;
 
-            return response is null || !response.IsSuccess
+            return response?.IsSuccess != true
                 ? new BadRequestObjectResult(response)
                 : new OkObjectResult(response);
         }

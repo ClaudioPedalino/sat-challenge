@@ -8,15 +8,5 @@
         public string Phone { get; set; }
         public string UserType { get; set; }
         public decimal Money { get; set; }
-
-        //public bool IsNormalUser() =>
-        //    UserType == nameof(Enums.UserType.Normal);
-
-        //public bool IsSuperUser() =>
-        //    UserType == nameof(Enums.UserType.SuperUser);
-
-        //public bool IsPremiumUser() =>
-        //    UserType == nameof(Enums.UserType.Premium);
-
     }
 }

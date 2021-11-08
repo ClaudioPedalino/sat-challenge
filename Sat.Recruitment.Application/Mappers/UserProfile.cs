@@ -11,12 +11,6 @@ namespace Sat.Recruitment.Application.Mappers
     {
         public UserProfile()
         {
-            // Cual es mejor?
-            //CreateMap<(CreateUserCommand request, string email), User>()
-            //    .ForMember(dest => dest.UserType, opt => opt.MapFrom(src => src.request.UserType.ToString()))
-            //    .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.email))
-            //    .ReverseMap();
-
             CreateMap<Tuple<CreateUserCommand, string, decimal>, User>()
                 .ForMember(dest => dest.Address, opt => opt.MapFrom(src => src.Item1.Address))
                 .ForMember(dest => dest.Money, opt => opt.MapFrom(src => src.Item3))

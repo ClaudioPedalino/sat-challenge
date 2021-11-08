@@ -6,236 +6,691 @@
 	},
 	"item": [
 		{
-			"name": "get-all",
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "{{sat-Api-Key}}",
-						"value": "{{sat-Api-Value}}",
-						"type": "text"
-					},
-					{
-						"key": "{{dev-rate-limit-key}}",
-						"value": "{{dev-rate-limit-value}}",
-						"type": "text"
-					}
-				],
-				"url": {
-					"raw": "{{base-api-url}}/api/users/get-all?bypassCache=true",
-					"host": [
-						"{{base-api-url}}"
-					],
-					"path": [
-						"api",
-						"users",
-						"get-all"
-					],
-					"query": [
-						{
-							"key": "name",
-							"value": "Elijah",
-							"disabled": true
-						},
-						{
-							"key": "email",
-							"value": "Agustina@gmail.com",
-							"disabled": true
-						},
-						{
-							"key": "address",
-							"value": "9203",
-							"disabled": true
-						},
-						{
-							"key": "phone",
-							"value": "382-",
-							"disabled": true
-						},
-						{
-							"key": "userType",
-							"value": null,
-							"disabled": true
-						},
-						{
-							"key": "moneyFrom",
-							"value": "10",
-							"disabled": true
-						},
-						{
-							"key": "moneyTo",
-							"value": "500",
-							"disabled": true
-						},
-						{
-							"key": "bypassCache",
-							"value": "true"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "get-by-id",
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "{{sat-Api-Key}}",
-						"value": "{{sat-Api-Value}}",
-						"type": "text"
-					},
-					{
-						"key": "{{dev-rate-limit-key}}",
-						"value": "{{dev-rate-limit-value}}",
-						"type": "text"
-					}
-				],
-				"url": {
-					"raw": "{{base-api-url}}/api/users/get-by-id/:userId?bypassCache=true",
-					"host": [
-						"{{base-api-url}}"
-					],
-					"path": [
-						"api",
-						"users",
-						"get-by-id",
-						":userId"
-					],
-					"query": [
-						{
-							"key": "bypassCache",
-							"value": "true"
-						}
-					],
-					"variable": [
-						{
-							"key": "userId",
-							"value": "e5bf082e-c1d8-4bb5-98b5-6960bcf9af35"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "create-user",
-			"event": [
+			"name": "Auth",
+			"item": [
 				{
-					"listen": "prerequest",
-					"script": {
-						"exec": [
-							"/* DATA =======================================*/\r",
-							"const validUserType = [1,2,3]\r",
-							"/*============================================*/\r",
-							"\r",
-							"/* FUNCTIONS ==================================*/\r",
-							"function getRandomInt(min, max) {\r",
-							"    return Math.floor(Math.random() * (max - min)) + min;\r",
-							"}\r",
-							"\r",
-							"function getRandomDecimal(min, max) {\r",
-							"    return Math.random() * (max - min);\r",
-							"}\r",
-							"\r",
-							"function getRandomUserType() {\r",
-							"    return validUserType[getRandomInt(0, validUserType.length)]\r",
-							"}\r",
-							"/*============================================*/\r",
-							"\r",
-							"/* SETTINGS VARIABLES ========================*/\r",
-							"pm.globals.set(\"money\", getRandomDecimal(1, 150));\r",
-							"pm.globals.set(\"userType\", getRandomUserType());\r",
-							"/*============================================*/"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "{{dev-rate-limit-key}}",
-						"value": "{{dev-rate-limit-value}}",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n  \"name\": \"{{$randomFirstName}}\",\r\n  \"email\": \"{{$randomEmail}}\",\r\n  \"address\": \"{{$randomStreetAddress}}\",\r\n  \"phone\": \"{{$randomPhoneNumber}}\",\r\n  \"userType\": {{userType}},\r\n  \"money\": {{money}}\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+					"name": "register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"{{admin-user}}\",\r\n  \"password\": \"{{admin-password}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base-api-url}}/api/Auth/register",
+							"host": [
+								"{{base-api-url}}"
+							],
+							"path": [
+								"api",
+								"Auth",
+								"register"
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "{{base-api-url}}/api/Users/create",
-					"host": [
-						"{{base-api-url}}"
-					],
-					"path": [
-						"api",
-						"Users",
-						"create"
-					]
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"{{admin-user}}\",\r\n  \"password\": \"{{admin-password}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base-api-url}}/api/Auth/login",
+							"host": [
+								"{{base-api-url}}"
+							],
+							"path": [
+								"api",
+								"Auth",
+								"login"
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
 		},
 		{
-			"name": "delete-user",
-			"event": [
+			"name": "Users",
+			"item": [
 				{
-					"listen": "prerequest",
-					"script": {
-						"exec": [
-							""
+					"name": "get-all",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "{{sat-Api-Key}}",
+								"value": "{{sat-Api-Value}}",
+								"type": "text"
+							},
+							{
+								"key": "{{dev-rate-limit-key}}",
+								"value": "{{dev-rate-limit-value}}",
+								"type": "text"
+							}
 						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "DELETE",
-				"header": [
-					{
-						"key": "{{dev-rate-limit-key}}",
-						"value": "{{dev-rate-limit-value}}",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "",
-					"options": {
-						"raw": {
-							"language": "json"
+						"url": {
+							"raw": "{{base-api-url}}/api/users/get-all?moneyFrom=20&moneyTo=50&bypassCache=true",
+							"host": [
+								"{{base-api-url}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"get-all"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "Maudie",
+									"disabled": true
+								},
+								{
+									"key": "email",
+									"value": "@g",
+									"disabled": true
+								},
+								{
+									"key": "address",
+									"value": "9203",
+									"disabled": true
+								},
+								{
+									"key": "phone",
+									"value": "382-",
+									"disabled": true
+								},
+								{
+									"key": "userType",
+									"value": "TODO",
+									"disabled": true
+								},
+								{
+									"key": "moneyFrom",
+									"value": "20"
+								},
+								{
+									"key": "moneyTo",
+									"value": "50"
+								},
+								{
+									"key": "bypassCache",
+									"value": "true"
+								},
+								{
+									"key": "pageNumber",
+									"value": "2",
+									"disabled": true
+								},
+								{
+									"key": "pageSize",
+									"value": "15",
+									"disabled": true
+								}
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "{{base-api-url}}/api/Users/delete/:userId",
-					"host": [
-						"{{base-api-url}}"
-					],
-					"path": [
-						"api",
-						"Users",
-						"delete",
-						":userId"
-					],
-					"variable": [
+				{
+					"name": "get-by-id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "{{sat-Api-Key}}",
+								"value": "{{sat-Api-Value}}",
+								"type": "text"
+							},
+							{
+								"key": "{{dev-rate-limit-key}}",
+								"value": "{{dev-rate-limit-value}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base-api-url}}/api/users/get-by-id/:userId?bypassCache=true",
+							"host": [
+								"{{base-api-url}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"get-by-id",
+								":userId"
+							],
+							"query": [
+								{
+									"key": "bypassCache",
+									"value": "true"
+								}
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "a238f2c1-30e3-4bae-34e7-08d9a23ad48d"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create-user",
+					"event": [
 						{
-							"key": "userId",
-							"value": "3fcd77d8-d2f9-4719-d945-08d9a19ca25c"
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"/* DATA =======================================*/\r",
+									"const validUserType = [1,2,3]\r",
+									"/*============================================*/\r",
+									"\r",
+									"/* FUNCTIONS ==================================*/\r",
+									"function getRandomInt(min, max) {\r",
+									"    return Math.floor(Math.random() * (max - min)) + min;\r",
+									"}\r",
+									"\r",
+									"function getRandomDecimal(min, max) {\r",
+									"    return Math.random() * (max - min);\r",
+									"}\r",
+									"\r",
+									"function getRandomUserType() {\r",
+									"    return validUserType[getRandomInt(0, validUserType.length)]\r",
+									"}\r",
+									"/*============================================*/\r",
+									"\r",
+									"/* SETTINGS VARIABLES ========================*/\r",
+									"pm.globals.set(\"money\", getRandomDecimal(1, 175));\r",
+									"pm.globals.set(\"userType\", getRandomUserType());\r",
+									"/*============================================*/"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{access-token}}",
+								"type": "text"
+							},
+							{
+								"key": "{{dev-rate-limit-key}}",
+								"value": "{{dev-rate-limit-value}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"{{$randomFullName}}\",\r\n  \"email\": \"{{$randomEmail}}\",\r\n  \"address\": \"{{$randomStreetAddress}}\",\r\n  \"phone\": \"{{$randomPhoneNumber}}\",\r\n  \"userType\": {{userType}},\r\n  \"money\": {{money}}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base-api-url}}/api/Users/create",
+							"host": [
+								"{{base-api-url}}"
+							],
+							"path": [
+								"api",
+								"Users",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete-user",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{access-token}}",
+								"type": "text"
+							},
+							{
+								"key": "{{dev-rate-limit-key}}",
+								"value": "{{dev-rate-limit-value}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base-api-url}}/api/Users/delete/:userId",
+							"host": [
+								"{{base-api-url}}"
+							],
+							"path": [
+								"api",
+								"Users",
+								"delete",
+								":userId"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "a238f2c1-30e3-4bae-34e7-08d9a23ad48d"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Test",
+			"item": [
+				{
+					"name": "AuthEndpoints",
+					"item": [
+						{
+							"name": "Login_ShouldSuccess_WhenValidUser",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Must have a token\", function () {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData.token).to.not.be.empty;\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Must not error messages\", function () {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData.errorMessages).to.eql([]);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"email\": \"{{admin-user}}\",\r\n  \"password\": \"{{admin-password}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base-api-url}}/api/Auth/login",
+									"host": [
+										"{{base-api-url}}"
+									],
+									"path": [
+										"api",
+										"Auth",
+										"login"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Login_ShouldFail_WhenUserDoesNotExist",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Token must be empty\", function () {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData.token).to.be.empty;\r",
+											"});\r",
+											"\r",
+											"pm.test(\"should fail when user does not exists\", function () {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData.errorMessages[0]).to.eql('User does not exist');\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"email\": \"usuarioquenuncaexistira@gmail.com\",\r\n  \"password\": \"MiContraseña1#\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base-api-url}}/api/Auth/login",
+									"host": [
+										"{{base-api-url}}"
+									],
+									"path": [
+										"api",
+										"Auth",
+										"login"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Login_ShouldFail_WhenInvalidPassword",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Token must be empty\", function () {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData.token).to.be.empty;\r",
+											"});\r",
+											"pm.test(\"should fail when invalid password\", function () {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData.errorMessages[0]).to.eql('User or passwords are incorrect');\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"email\": \"{{admin-user}}\",\r\n  \"password\": \"MiContraseña1#\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base-api-url}}/api/Auth/login",
+									"host": [
+										"{{base-api-url}}"
+									],
+									"path": [
+										"api",
+										"Auth",
+										"login"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Register_ShouldSuccess_WhenValidUser",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Must have a token\", function () {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData.token).to.not.be.empty;\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Must not error messages\", function () {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData.errorMessages).to.eql([]);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"email\": \"{{$randomExampleEmail}}\",\r\n  \"password\": \"MiContraseña1#\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base-api-url}}/api/Auth/register",
+									"host": [
+										"{{base-api-url}}"
+									],
+									"path": [
+										"api",
+										"Auth",
+										"register"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Register_ShouldFail_WhenInvalid_DuplicateUserEmail",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Token must be empty\", function () {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData.token).to.be.empty;\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Must not error messages\", function () {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData.errorMessages[0]).to.eql(\"User with this email address already exists\");\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"email\": \"{{admin-user}}\",\r\n  \"password\": \"MiContraseña#123\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base-api-url}}/api/Auth/register",
+									"host": [
+										"{{base-api-url}}"
+									],
+									"path": [
+										"api",
+										"Auth",
+										"register"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Register_ShouldFail_WhenInvalid_EmailFormat",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Must fail with invalid email format\", function () {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData.errors.Email[0]).to.eql(\"'Email' is not a valid email address.\");\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"email\": \"a\",\r\n  \"password\": \"MiContraseña#123\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base-api-url}}/api/Auth/register",
+									"host": [
+										"{{base-api-url}}"
+									],
+									"path": [
+										"api",
+										"Auth",
+										"register"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Register_ShouldFail_WhenInvalid_PasswordFormat",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Must fail with password under 6 characters\", function () {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData.errorMessages[0]).to.eql(\"Passwords must be at least 6 characters.\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Must contain at least one non alphanumeric character\", function () {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData.errorMessages[1]).to.eql(\"Passwords must have at least one non alphanumeric character.\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Must have at least one lowercase\", function () {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData.errorMessages[2]).to.eql(\"Passwords must have at least one lowercase ('a'-'z').\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Must have at least one uppercase\", function () {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData.errorMessages[3]).to.eql(\"Passwords must have at least one uppercase ('A'-'Z').\");\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"email\": \"{{$randomExampleEmail}}\",\r\n  \"password\": \"1\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base-api-url}}/api/Auth/register",
+									"host": [
+										"{{base-api-url}}"
+									],
+									"path": [
+										"api",
+										"Auth",
+										"register"
+									]
+								}
+							},
+							"response": []
 						}
 					]
 				}
-			},
-			"response": []
+			]
 		}
 	],
 	"event": [
@@ -273,7 +728,7 @@
 		},
 		{
 			"key": "access-token",
-			"value": ""
+			"value": "bearer {{token}}"
 		},
 		{
 			"key": "dev-rate-limit-key",
@@ -282,6 +737,18 @@
 		{
 			"key": "dev-rate-limit-value",
 			"value": "dev-id-1"
+		},
+		{
+			"key": "token",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjcGVkYWxpbm9AZ21haWwuY29tIiwianRpIjoiOGJlYWNjZjctMGZkZi00ZWI2LWFmY2EtODFiMWU4ZjUyYjA4IiwiYXV0aF90aW1lIjoiMTEvNy8yMDIxIiwiZW1haWwiOiJjcGVkYWxpbm9AZ21haWwuY29tIiwiaWQiOiI1ZTIyYWViMy00Y2YwLTQ5ZDMtODMzNC00NmI2NjRkZWRlYjgiLCJjcmVhdGVkQXQiOiIxMS83LzIwMjEgMToxODozNyBBTSIsIm5iZiI6MTYzNjI1ODcxNywiZXhwIjoxNjM2MzAxOTE3LCJpYXQiOjE2MzYyNTg3MTd9.zoHouQFI9wbe9IKMNNVh_2R8VJNkMB2wqQY5dKYPnNA"
+		},
+		{
+			"key": "admin-user",
+			"value": "admin@sat.com"
+		},
+		{
+			"key": "admin-password",
+			"value": "MiContraseña#123"
 		}
 	]
 }

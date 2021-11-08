@@ -1,6 +1,6 @@
 ﻿using Sat.Recruitment.Application.Interfaces;
 
-namespace Sat.Recruitment.Application.Models
+namespace Sat.Recruitment.Application.Queries
 {
     public record PaginableQuery : IPaginableQuery
     {
