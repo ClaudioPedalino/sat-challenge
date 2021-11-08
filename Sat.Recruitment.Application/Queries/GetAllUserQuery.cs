@@ -31,7 +31,7 @@ namespace Sat.Recruitment.Application.Queries
                 Email: request.Email,
                 Address: request.Address,
                 Phone: request.Phone,
-                UserType: request.UserType,
+                UserType: request.UserType.HasValue ? request.UserType.ToString() : null,
                 MoneyFrom: request.MoneyFrom,
                 MoneyTo: request.MoneyTo,
                 BypassCache: request.BypassCache);
@@ -75,7 +75,7 @@ namespace Sat.Recruitment.Application.Queries
                 .WhereIf(!string.IsNullOrWhiteSpace(request.Email), x => x.Email.Contains(request.Email))
                 .WhereIf(!string.IsNullOrWhiteSpace(request.Address), x => x.Address.Contains(request.Address))
                 .WhereIf(!string.IsNullOrWhiteSpace(request.Phone), x => x.Phone.Contains(request.Phone))
-                //.WhereIf(!string.IsNullOrWhiteSpace(request.Search), x => x.UserType.Contains(request.Search))
+                .WhereIf(!string.IsNullOrWhiteSpace(request.UserType), x => x.UserType.Contains(request.UserType))
                 .WhereIf(request.MoneyFrom.HasValue, x => x.Money >= request.MoneyFrom.Value)
                 .WhereIf(request.MoneyTo.HasValue, x => x.Money <= request.MoneyTo.Value);
     }
