@@ -30,9 +30,10 @@ namespace Sat.Recruitment.Test.CommandTest
             var validCreateCommand = CommandMocksOf.Valid_CreateUserCommand();
             var validUser = UserMocksOf.Valid_User();
 
-            _mapperMock.Setup(x => x.Map<User>(new Tuple<CreateUserCommand, string>(
+            _mapperMock.Setup(x => x.Map<User>(new Tuple<CreateUserCommand, string, decimal>(
                 validCreateCommand,
-                validCreateCommand.Email.NormalizeEmail())))
+                validCreateCommand.Email.NormalizeEmail(),
+                validCreateCommand.Money)))
                 .Returns(validUser);
 
             _userRepositoryMock.Setup(x => x.AlreadyExist(validUser))
@@ -52,9 +53,10 @@ namespace Sat.Recruitment.Test.CommandTest
             var validCreateCommand = CommandMocksOf.Valid_CreateUserCommand();
             var validUser = UserMocksOf.Valid_User();
 
-            _mapperMock.Setup(x => x.Map<User>(new Tuple<CreateUserCommand, string>(
+            _mapperMock.Setup(x => x.Map<User>(new Tuple<CreateUserCommand, string, decimal>(
                 validCreateCommand,
-                validCreateCommand.Email.NormalizeEmail())))
+                validCreateCommand.Email.NormalizeEmail(),
+                validCreateCommand.Money)))
                 .Returns(validUser);
 
             _userRepositoryMock.Setup(x => x.AlreadyExist(validUser))
@@ -72,9 +74,10 @@ namespace Sat.Recruitment.Test.CommandTest
             var validCreateCommand = CommandMocksOf.Valid_CreateUserCommand();
             var validUser = UserMocksOf.Valid_User();
 
-            _mapperMock.Setup(x => x.Map<User>(new Tuple<CreateUserCommand, string>(
+            _mapperMock.Setup(x => x.Map<User>(new Tuple<CreateUserCommand, string, decimal>(
                 validCreateCommand,
-                validCreateCommand.Email.NormalizeEmail())))
+                validCreateCommand.Email.NormalizeEmail(),
+                      validCreateCommand.Money)))
                 .Returns(validUser);
 
             var response = await _sut.Handle(validCreateCommand, new CancellationToken());
@@ -88,9 +91,10 @@ namespace Sat.Recruitment.Test.CommandTest
             var validCreateCommand = CommandMocksOf.Valid_CreateUserCommand();
             var validUser = UserMocksOf.Valid_User();
 
-            _mapperMock.Setup(x => x.Map<User>(new Tuple<CreateUserCommand, string>(
+            _mapperMock.Setup(x => x.Map<User>(new Tuple<CreateUserCommand, string, decimal>(
                 validCreateCommand,
-                validCreateCommand.Email.NormalizeEmail())))
+                validCreateCommand.Email.NormalizeEmail(),
+                validCreateCommand.Money)))
                 .Returns(validUser);
 
             _userRepositoryMock.Setup(x => x.AlreadyExist(validUser))

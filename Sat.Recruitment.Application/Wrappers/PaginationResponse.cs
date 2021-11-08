@@ -12,7 +12,7 @@ namespace Sat.Recruitment.Application.Wrappers
         public IEnumerable<TResponse> Data { get; set; }
 
         public static PaginationResponse<TResponse> CreatePaginationResult<TQuery>(TQuery request, int total, List<TResponse> data)
-            where TQuery : IPaginable => new()
+            where TQuery : IPaginableQuery => new()
             {
                 Data = data,
                 PageSize = request.PageSize,
@@ -22,7 +22,7 @@ namespace Sat.Recruitment.Application.Wrappers
 
         public static IQueryable<TEntity> Paginate<TEntity, TQuery>(TQuery request, IQueryable<TEntity> dataDb)
             //where TEntity : BaseEntity
-            where TQuery : IPaginable =>
+            where TQuery : IPaginableQuery =>
             dataDb.Skip((request.PageNumber - 1) * request.PageSize)
                   .Take(request.PageSize);
     }

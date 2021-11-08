@@ -1,12 +1,13 @@
 ﻿using AutoMapper;
 using MediatR;
-using Sat.Recruitment.Infra.Common;
 using Sat.Recruitment.Application.Helpers;
 using Sat.Recruitment.Application.Interfaces;
 using Sat.Recruitment.Application.Wrappers;
 using Sat.Recruitment.Domain;
 using Sat.Recruitment.Domain.Entities;
 using Sat.Recruitment.Domain.Enums;
+using Sat.Recruitment.Domain.UserMoneyCalculation;
+using Sat.Recruitment.Infra.Common;
 using Sat.Recruitment.Infra.Interfaces;
 using System;
 using System.Threading;
@@ -38,75 +39,27 @@ namespace Sat.Recruitment.Application.Commands
 
         public async Task<CommandResponse> Handle(CreateUserCommand request, CancellationToken cancellationToken)
         {
-            var newUser = _mapper.Map<User>(new Tuple<CreateUserCommand, string>(
+            var entity = _mapper.Map<User>(new Tuple<CreateUserCommand, string, decimal>(
                 request,
-                request.Email.NormalizeEmail()));
+                request.Email.NormalizeEmail(),
+                ApplyMoneyBonification(request.UserType, request.Money)));
 
-            var alreadyExist = await _userRepository.AlreadyExist(newUser);
+            var alreadyExist = await _userRepository.AlreadyExist(entity);
             if (alreadyExist)
                 return CommandResponse.Fail(Const.UserDuplicated);
 
-            CalculateUserMoney(request.Money, newUser);
+            await _userRepository.Insert(entity);
 
-            await _userRepository.Insert(newUser);
-
-            return CommandResponse.SuccesfullyCreated<User>($"{newUser.Name} with usertype {newUser.UserType}");
+            return CommandResponse.SuccesfullyCreated<User>($"{entity.Name} with usertype {entity.UserType}");
         }
 
-
-        private static void CalculateUserMoney(decimal requestMoney, User newUser)
-        {
-            switch (newUser.UserType)
+        private static decimal ApplyMoneyBonification(UserType userType, decimal money)
+            => userType switch
             {
-                case nameof(Domain.Enums.UserType.Normal):
-                    if (requestMoney > 100)
-                    {
-                        newUser.Money += requestMoney * UserTypePercentage.NormalMoreThan100;
-                    }
-                    if (requestMoney is > 10 and < 100)
-                    {
-                        newUser.Money += requestMoney * UserTypePercentage.NormalBetween10And100;
-                    }
-                    break;
-                case nameof(Domain.Enums.UserType.SuperUser):
-                    if (requestMoney > 100)
-                    {
-                        newUser.Money += requestMoney * UserTypePercentage.SuperUser;
-                    }
-                    break;
-                case nameof(Domain.Enums.UserType.Premium):
-                    if (requestMoney > 100)
-                    {
-                        newUser.Money += requestMoney * UserTypePercentage.Premium;
-                    }
-                    break;
-            }
-
-            //if (newUser.IsNormalUser())
-            //{
-            //    if (requestMoney > 100)
-            //    {
-            //        newUser.Money += requestMoney * UserTypePercentage.NormalMoreThan100;
-            //    }
-            //    if (requestMoney is > 10 and < 100)
-            //    {
-            //        newUser.Money += requestMoney * UserTypePercentage.NormalBetween10And100;
-            //    }
-            //}
-            //if (newUser.IsSuperUser())
-            //{
-            //    if (requestMoney > 100)
-            //    {
-            //        newUser.Money += requestMoney * UserTypePercentage.SuperUser;
-            //    }
-            //}
-            //if (newUser.IsPremiumUser())
-            //{
-            //    if (requestMoney > 100)
-            //    {
-            //        newUser.Money += requestMoney * UserTypePercentage.Premium;
-            //    }
-            //}
-        }
+                UserType.Normal => new NormalUserMoneyBonification().CalculateUserMoneyBonification(money),
+                UserType.SuperUser => new SuperUserMoneyBonification().CalculateUserMoneyBonification(money),
+                UserType.Premium => new PremiumUserMoneyBonification().CalculateUserMoneyBonification(money),
+                _ => money,
+            };
     }
 }

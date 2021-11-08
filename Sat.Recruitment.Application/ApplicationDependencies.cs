@@ -5,6 +5,9 @@ using Sat.Recruitment.Application.Commands;
 using Sat.Recruitment.Application.Interfaces;
 using Sat.Recruitment.Application.Mappers;
 using Sat.Recruitment.Application.MediatorBehaviours;
+using Sat.Recruitment.Application.Models;
+using Sat.Recruitment.Application.Queries;
+using Sat.Recruitment.Application.Services;
 using Sat.Recruitment.Application.Validators;
 using Sat.Recruitment.Infra.Interfaces;
 using Sat.Recruitment.Infra.Persistence.Repositories;
@@ -27,8 +30,9 @@ namespace Sat.Recruitment.Application
             services.AddSingleton<ILogger>(_ =>
                 new LoggerConfiguration().WriteTo.Console().CreateLogger());
 
-            services.AddScoped<IPaginable, Paginable>();
-            
+            services.AddScoped<IPaginableQuery, PaginableQuery>();
+            services.AddTransient<INotifierService, NotifierService>();
+
             services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
             services.AddTransient<IUserRepository, UserRepository>();
 

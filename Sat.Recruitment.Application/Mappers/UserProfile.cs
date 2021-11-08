@@ -2,6 +2,7 @@
 using Sat.Recruitment.Application.Commands;
 using Sat.Recruitment.Application.Extensions;
 using Sat.Recruitment.Application.Models;
+using Sat.Recruitment.Application.Models.Responses;
 using Sat.Recruitment.Domain.Entities;
 using System;
 
@@ -17,9 +18,9 @@ namespace Sat.Recruitment.Application.Mappers
             //    .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.email))
             //    .ReverseMap();
 
-            CreateMap<Tuple<CreateUserCommand, string>, User>()
+            CreateMap<Tuple<CreateUserCommand, string, decimal>, User>()
                 .ForMember(dest => dest.Address, opt => opt.MapFrom(src => src.Item1.Address))
-                .ForMember(dest => dest.Money, opt => opt.MapFrom(src => src.Item1.Money))
+                .ForMember(dest => dest.Money, opt => opt.MapFrom(src => src.Item3))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Item1.Name))
                 .ForMember(dest => dest.Phone, opt => opt.MapFrom(src => src.Item1.Phone))
                 .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Item2))

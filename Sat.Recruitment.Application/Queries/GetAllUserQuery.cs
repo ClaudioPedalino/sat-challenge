@@ -4,6 +4,7 @@ using Sat.Recruitment.Application.Dto;
 using Sat.Recruitment.Application.Extensions;
 using Sat.Recruitment.Application.Interfaces;
 using Sat.Recruitment.Application.Models;
+using Sat.Recruitment.Application.Models.Responses;
 using Sat.Recruitment.Application.Wrappers;
 using Sat.Recruitment.Domain.Entities;
 using Sat.Recruitment.Infra.Interfaces;
@@ -23,7 +24,7 @@ namespace Sat.Recruitment.Application.Queries
         string UserType,
         decimal? MoneyFrom,
         decimal? MoneyTo,
-        bool BypassCache) : Paginable, IRequest<PaginationResponse<GetUserResponse>>, ICacheable
+        bool BypassCache) : PaginableQuery, IRequest<PaginationResponse<GetUserResponse>>, ICacheable
     {
         public static GetAllUserQuery BuildGetAllUserQuery(GetAllUserDto request)
             => new(
@@ -34,7 +35,7 @@ namespace Sat.Recruitment.Application.Queries
                 UserType: request.UserType,
                 MoneyFrom: request.MoneyFrom,
                 MoneyTo: request.MoneyTo,
-                BypassCache : request.BypassCache);
+                BypassCache: request.BypassCache);
 
         public string CacheKey => $"{GetType().Name}-{Name}-{Email}-{Address}-{Phone}-{UserType}-{MoneyFrom}-{MoneyTo}";
         public TimeSpan? SlidingExpiration { get; set; }

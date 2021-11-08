@@ -1,5 +1,4 @@
 ﻿using Sat.Recruitment.Application.Helpers;
-using Sat.Recruitment.Domain.Entities;
 
 namespace Sat.Recruitment.Application.Wrappers
 {
@@ -35,6 +34,6 @@ namespace Sat.Recruitment.Application.Wrappers
             => new() { IsSuccess = false, Message = message };
 
         public static CommandResponse NotFound()
-            => new() { IsSuccess = false, Message = "No se encontró un registro con la información enviada" };
+            => new() { IsSuccess = false, Message = "There is no registry with given information" };
     }
 }

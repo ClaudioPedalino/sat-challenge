@@ -12,7 +12,7 @@ namespace Sat.Recruitment.Application.Helpers
             Console.ResetColor();
         }
 
-        public static void PrintString(string message, ConsoleColor color = ConsoleColor.DarkCyan)
+        public static void PrintString(string message, ConsoleColor color = ConsoleColor.Cyan)
         {
             Console.ForegroundColor = color;
             Console.WriteLine(message);

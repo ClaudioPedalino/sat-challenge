@@ -12,7 +12,7 @@ namespace Sat.Recruitment.Test.MockedObjects
             Address: "Av. Juan G",
             Phone: "+349 1122354215",
             UserType: UserType.Normal,
-            Money: 124);
+            Money: 5);
 
         public static CreateUserCommand Parametrizable(
             string name = "Pepe",

@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
 using Sat.Recruitment.Application.Interfaces;
-using Sat.Recruitment.Application.Models;
+using Sat.Recruitment.Application.Models.Responses;
 using Sat.Recruitment.Infra.Interfaces;
 using System;
 using System.Threading;

@@ -32,7 +32,16 @@ namespace Sat.Recruitment.Application.Wrappers
         {
             var response = await _mediator.Send(command) as CommandResponse;
 
-            return !response.IsSuccess
+            return response is null || !response.IsSuccess
+                ? new BadRequestObjectResult(response)
+                : new OkObjectResult(response);
+        }
+
+        public static async Task<IActionResult> AuthCommandWrapper<TCommand>(this IMediator _mediator, TCommand command)
+        {
+            var response = await _mediator.Send(command) as AuthenticationResult;
+
+            return response?.ErrorMessages.Any() != false
                 ? new BadRequestObjectResult(response)
                 : new OkObjectResult(response);
         }

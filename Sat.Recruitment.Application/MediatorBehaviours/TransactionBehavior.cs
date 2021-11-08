@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Logging;
 using Sat.Recruitment.Application.Interfaces;
+using Sat.Recruitment.Application.Services;
 using Sat.Recruitment.Infra.Interfaces;
 using System;
 using System.Threading;
@@ -14,15 +15,18 @@ namespace Sat.Recruitment.Application.MediatorBehaviours
     {
         private readonly ILogger<TransactionBehavior<TRequest, TResponse>> _logger;
         private readonly IDataContext _dbContext;
+        private readonly INotifierService _notifierService;
         private IDistributedCache _cache;
 
         public TransactionBehavior(ILogger<TransactionBehavior<TRequest, TResponse>> logger,
                                    IDataContext dbContext,
-                                   IDistributedCache cache)
+                                   IDistributedCache cache,
+                                   INotifierService notifierService)
         {
             _logger = logger;
             _dbContext = dbContext;
             _cache = cache;
+            _notifierService = notifierService;
         }
 
         public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
@@ -38,7 +42,11 @@ namespace Sat.Recruitment.Application.MediatorBehaviours
                     response = await next();
 
                     await _dbContext.CommitTransactionAsync(cancellationToken);
+
+                    _notifierService.Notify(typeof(TRequest).Name + " Completed succesfully");
+
                     _cache.Remove("");
+
                     _logger.LogInformation($"End transaction: {typeof(TRequest).Name}.");
                 });
             }

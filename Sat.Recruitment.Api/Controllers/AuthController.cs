@@ -1,6 +1,8 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Sat.Recruitment.Application.Commands;
+using Sat.Recruitment.Application.Wrappers;
 using System.Threading.Tasks;
 
 namespace Sat.Recruitment.Api.Controllers
@@ -9,22 +11,27 @@ namespace Sat.Recruitment.Api.Controllers
     [Route("api/[controller]")]
     public class AuthController : ControllerBase
     {
-        [HttpPost("login")]
-        public async Task<ActionResult> Login([FromServices] IMediator _mediator, LoginAuthUserCommand command)
+        private readonly IMediator _mediator;
+
+        public AuthController(IMediator mediator)
         {
-            var response = await _mediator.Send(command);
-            return response.ErrorMessages is null
-                ? BadRequest(response)
-                : Ok(value: response);
+            _mediator = mediator;
         }
 
+
+        [HttpPost("login")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(AuthenticationResult))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(AuthenticationResult))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ApiResponse<string>))]
+        public async Task<IActionResult> Login([FromBody] LoginAuthUserCommand command) =>
+            await _mediator.AuthCommandWrapper(command);
+
+
         [HttpPost("register")]
-        public async Task<IActionResult> Register([FromServices] IMediator _mediator, RegisterAuthUserCommand command)
-        {
-            var response = await _mediator.Send(command);
-            return response.ErrorMessages is null
-                ? BadRequest(response)
-                : Ok(value: response);
-        }
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(AuthenticationResult))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(AuthenticationResult))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ApiResponse<string>))]
+        public async Task<IActionResult> Register([FromBody] RegisterAuthUserCommand command) =>
+            await _mediator.AuthCommandWrapper(command);
     }
 }
